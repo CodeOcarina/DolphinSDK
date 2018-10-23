@@ -35,3 +35,9 @@
 # Visual Studio
 *.vs
 *.vscode
+
+
+# eos log
+nodeos/nodeos.log
+nodeos/dev.wallet
+

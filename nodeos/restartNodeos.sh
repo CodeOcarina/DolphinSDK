@@ -1,0 +1,2 @@
+./stopNodeos.sh
+./startNodeos.sh
