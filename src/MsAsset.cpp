@@ -1,19 +1,19 @@
 
-MsAsset::MsAsset(std::string theTokenAccountName, uint8_t thePrecision, std::string theTokenSymbol)
+msAsset::msAsset(std::string theTokenAccountName, uint8_t thePrecision, std::string theTokenSymbol)
 {
     this->amount = 0;
     this->symbol = ::eosio::string_to_symbol(thePrecision, theTokenSymbol.c_str());
     this->contract = S2N(theTokenAccountName);
 }
 
-MsAsset::MsAsset(AccountName theTokenAccountName, eosio::symbol_type theTokenSymbol, uint64_t amount)
+msAsset::msAsset(AccountName theTokenAccountName, eosio::symbol_type theTokenSymbol, uint64_t amount)
 {
     this->amount = amount;
     this->symbol = theTokenSymbol;
     this->contract = theTokenAccountName;
 }
 
-MsAsset::MsAsset(AccountName theTokenAccountName, eosio::asset quantity)
+msAsset::msAsset(AccountName theTokenAccountName, eosio::asset quantity)
 {
     this->amount = quantity.amount;
     this->symbol = quantity.symbol;
@@ -21,7 +21,7 @@ MsAsset::MsAsset(AccountName theTokenAccountName, eosio::asset quantity)
 }
 
 // std::string
-// MsAsset::SymbolToString(eosio::symbol_type _symbol_type)
+// msAsset::SymbolToString(eosio::symbol_type _symbol_type)
 // {
 //     DefBuff(buff, 10);
 //     auto sym = _symbol_type.value;
@@ -37,13 +37,13 @@ MsAsset::MsAsset(AccountName theTokenAccountName, eosio::asset quantity)
 //     return std::string(buff);
 // }
 
-bool MsAsset::isSystemEOSToken()
+bool msAsset::isSystemEOSToken()
 {
     return this->contract == N(eosio.token) && this->symbol.value == S(4, EOS);
 }
 
 std::string
-MsAsset::SymbolToString()
+msAsset::SymbolToString()
 {
     DefBuff(buff, 10);
 
@@ -60,7 +60,7 @@ MsAsset::SymbolToString()
     return std::string(buff);
 }
 
-// bool MsAsset::analyzing_asset(std::string &p1, std::string &p2, eosio::asset &out_asset)
+// bool msAsset::analyzing_asset(std::string &p1, std::string &p2, eosio::asset &out_asset)
 // {
 //     DefBuff(buff, 100);
 //     int precision = 0;
@@ -95,7 +95,7 @@ MsAsset::SymbolToString()
 // }
 
 std::string
-MsAsset::_AmountN2S(uint8_t precision, uint64_t intAmount)
+msAsset::_AmountN2S(uint8_t precision, uint64_t intAmount)
 {
     if (precision <= 0 && precision > 8)
     {
@@ -124,7 +124,7 @@ MsAsset::_AmountN2S(uint8_t precision, uint64_t intAmount)
 }
 
 std::string
-MsAsset::AmountN2S(uint8_t precision, uint64_t intAmount)
+msAsset::AmountN2S(uint8_t precision, uint64_t intAmount)
 {
     auto ret = _AmountN2S(precision, intAmount);
     // MsLog(_AmountS2N(ret, precision), "|||", intAmount);
@@ -133,7 +133,7 @@ MsAsset::AmountN2S(uint8_t precision, uint64_t intAmount)
 }
 
 uint64_t
-MsAsset::_AmountS2N(std::string strAmount, uint8_t &precision)
+msAsset::_AmountS2N(std::string strAmount, uint8_t &precision)
 {
     DefBuff(buff, 100);
     precision = 0;
@@ -157,7 +157,7 @@ MsAsset::_AmountS2N(std::string strAmount, uint8_t &precision)
 }
 
 uint64_t
-MsAsset::AmountS2N(std::string strAmount, uint8_t &precision)
+msAsset::AmountS2N(std::string strAmount, uint8_t &precision)
 {
     auto ret = _AmountS2N(strAmount, precision);
     // MsLog(_AmountN2S(precision, ret).c_str(), "||||", strAmount.c_str());
@@ -165,7 +165,7 @@ MsAsset::AmountS2N(std::string strAmount, uint8_t &precision)
     return ret;
 }
 
-// bool MsAsset::analyzing_extended_asset(std::string &p1, std::string &p2, std::string &p3, extended_asset &out_extended_asset)
+// bool msAsset::analyzing_extended_asset(std::string &p1, std::string &p2, std::string &p3, extended_asset &out_extended_asset)
 // {
 //     defBuff(buff, 100);
 //     int precision = 0;
@@ -207,19 +207,19 @@ MsAsset::AmountS2N(std::string strAmount, uint8_t &precision)
 // }
 
 AccountName
-MsAsset::GetContractEosName()
+msAsset::GetContractEosName()
 {
     return this->contract;
 }
 
 // Ms::Account
-// MsAsset::GetContractName()
+// msAsset::GetContractName()
 // {
 //     return Ms::Account(this->contract);
 // }
 
 std::string
-MsAsset::ToString()
+msAsset::ToString()
 {
     int64_t p = (int64_t)symbol.precision();
     int64_t p10 = 1;
@@ -246,7 +246,7 @@ MsAsset::ToString()
     return std::string(buff) + " " + this->ToString();
 }
 
-bool MsAsset::Validate(std::string min, std::string max, AccountName TokenContractName, eosio::symbol_type theTokenSymbol)
+bool msAsset::Validate(std::string min, std::string max, AccountName TokenContractName, eosio::symbol_type theTokenSymbol)
 {
     if (TokenContractName != this->contract)
     {
@@ -273,7 +273,7 @@ bool MsAsset::Validate(std::string min, std::string max, AccountName TokenContra
 }
 
 uint64_t
-MsAsset::GetAmountByInt()
+msAsset::GetAmountByInt()
 {
     return amount;
 }
@@ -286,6 +286,6 @@ MsAsset::GetAmountByInt()
 // }
 
 // eosio::extended_asset
-// MsAsset::GetBalance(Account theAccount)
+// msAsset::GetBalance(Account theAccount)
 // {
 // }

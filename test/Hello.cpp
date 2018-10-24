@@ -7,7 +7,7 @@ void Hello::transfer()
     MAKE_PARAM(param,
         (account_name from)(account_name to)(eosio::asset quantity)(std::string memo));
 
-    // Json::JSON jsonObj = this->LoadParam(param.memo);
+    // json::JSON jsonObj = this->loadParam(param.memo);
 
     //eosio::require_recipient(S2N(jsonObj["tar"].ToString()));
 
@@ -28,7 +28,7 @@ void Hello::bbb()
     // MAKE_PARAM(param, (std::string json_param));
     // MsLog("222222222");
     // MsLog(param.json_param.size(), param.json_param.c_str());
-    // auto jsonObj = this->LoadParam(param.json_param);
+    // auto jsonObj = this->loadParam(param.json_param);
 
     // MsLog("Contract::bbb,默认处理", jsonObj["from"].ToString().c_str());
     // MsLog("Contract::bbb,默认处理", jsonObj["to"].ToString().c_str());
@@ -54,7 +54,7 @@ struct test_table
 
 void Hello::aaa()
 {
-    // auto josnObject = this->LoadParam(eosio::unpack_action_data<std::string>());
+    // auto josnObject = this->loadParam(eosio::unpack_action_data<std::string>());
 
     // // eosio::execute_action(thiscontract, &OP::elem);
 

@@ -21,15 +21,15 @@ enum INTERFACE_ROLE_TYPE
     IRT_USER,
 };
 
-class MsAccount
+class msAccount
 {
   private:
     AccountName m_account;
 
   public:
-    MsAccount(std::string _account_name);
-    // MsAccount(const char *_account_name);
-    MsAccount(AccountName _account);
+    msAccount(std::string _account_name);
+    // msAccount(const char *_account_name);
+    msAccount(AccountName _account);
 
     void
     CheckPermission();
@@ -43,24 +43,24 @@ class MsAccount
     std::string
     ToString();
 
-    MsAsset
-    GetBalance(MsAccount token_contract, uint64_t precision, const char *symbol);
+    msAsset
+    GetBalance(msAccount token_contract, uint64_t precision, const char *symbol);
 
     bool
-    CheckBalance(MsAsset theAsset);
+    CheckBalance(msAsset theAsset);
 
     void
-    Transfer(MsAccount target_account, MsAsset asset_amount, std::string memo);
+    Transfer(msAccount target_account, msAsset asset_amount, std::string memo);
 
-    MsAsset
-    GetBalance(MsAccount token_contract, eosio::symbol_type sym);
+    msAsset
+    GetBalance(msAccount token_contract, eosio::symbol_type sym);
 
-    bool operator==(MsAccount &other)
+    bool operator==(msAccount &other)
     {
         return this->m_account == other.m_account;
     }
 
-    bool operator!=(MsAccount &other)
+    bool operator!=(msAccount &other)
     {
         return this->m_account != other.m_account;
     }

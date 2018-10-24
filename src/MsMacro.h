@@ -63,22 +63,22 @@ namespace eosio
     void elem(void);
 
 #define MS_RPC_API_REG(r, OP, elem) \
-    x->m_listRPC[N(elem)] = (MsContract::RPC_CALL)&OP::elem;
+    x->m_listRPC[N(elem)] = (msContract::RPC_CALL)&OP::elem;
 
 #define MS_RPC_API_LIST(TYPE, MEMBERS) \
     BOOST_PP_SEQ_FOR_EACH(MS_RPC_API_DEF, TYPE, MEMBERS)
 
 #define BEGIN_DEF_RPC(contract_name, MEMBERS)                                                                          \
-    class contract_name : public MsContract                                                                            \
+    class contract_name : public msContract                                                                            \
     {                                                                                                                  \
       public:                                                                                                          \
-        contract_name(uint64_t _receiver, uint64_t _code, uint64_t _action) : MsContract(_receiver, _code, _action) {} \
-        virtual void OnTransferToMe(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo);        \
-        virtual void OnTransferFromMe(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo);      \
-        virtual void OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo);       \
+        contract_name(uint64_t _receiver, uint64_t _code, uint64_t _action) : msContract(_receiver, _code, _action) {} \
+        virtual void onTransferToMe(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo);        \
+        virtual void onTransferFromMe(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo);      \
+        virtual void onTransferOther(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo);       \
         BOOST_PP_SEQ_FOR_EACH(MS_RPC_API_DEF, contract_name, MEMBERS)                                                  \
     };                                                                                                                 \
-    MsContract *MsContract::CreateNewContractInstance(uint64_t _receiver, uint64_t _code, uint64_t _action)            \
+    msContract *msContract::createNewContractInstance(uint64_t _receiver, uint64_t _code, uint64_t _action)            \
     {                                                                                                                  \
         auto x = new contract_name(_receiver, _code, _action);                                                         \
         BOOST_PP_SEQ_FOR_EACH(MS_RPC_API_REG, contract_name, MEMBERS)                                                  \
@@ -96,7 +96,7 @@ namespace eosio
 #define MS_MAKE_PACK_STRUCT(MEMBERS) \
     BOOST_PP_SEQ_FOR_EACH(MS_UNPACK_FIELD, , MEMBERS)
 
-#define MAKE_PARAM(param, MEMBERS)    \
+#define MAKE_PARAM(param, MEMBERS)        \
     auto unpack_param_fun = []() {        \
     struct ___rpc_cmd_param___            \
     {                                     \

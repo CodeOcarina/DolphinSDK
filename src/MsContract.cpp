@@ -1,30 +1,30 @@
 #pragma once
 
-MsContract::MsContract(uint64_t _self, uint64_t _code, uint64_t _action)
+msContract::msContract(uint64_t _self, uint64_t _code, uint64_t _action)
     : eosio::contract(_self), m_self(_self), m_receiver(_self), m_code(_code), m_action(_action)
 {
 }
 
-MsAccount
-MsContract::GetCurrentReceiver()
+msAccount
+msContract::getCurrentReceiver()
 {
     return m_receiver;
 }
 
-MsAccount
-MsContract::GetCurrentCode()
+msAccount
+msContract::getCurrentCode()
 {
     return m_code;
 }
 
-void MsContract::CommitAndExit(uint64_t ret_code)
+void msContract::commitAndExit(uint64_t ret_code)
 {
     MsLog("commit and exit ret code: ", ret_code);
     eosio_exit(0);
 }
 
-Json::JSON
-MsContract::LoadParam(std::string &_json_param)
+json::JSON
+msContract::loadParam(std::string &_json_param)
 {
     eosio::print("\n\n");
     eosio::print("\n===json======================\n");
@@ -35,13 +35,13 @@ MsContract::LoadParam(std::string &_json_param)
 
     eosio::print("\n==============================\n");
     eosio::print("params\n");
-    Json::JSON obj = Json::JSON::Load(_json_param);
+    json::JSON obj = json::JSON::Load(_json_param);
     eosio::print(obj.dump().c_str());
     eosio::print("\n==============================\n");
     return obj;
 }
 
-void MsContract::OnCall()
+void msContract::onCall()
 {
     MsAssert(m_action.GetEosName() != N(onerror), "onerror action's are unsafe");
 
@@ -56,20 +56,20 @@ void MsContract::OnCall()
         eosio::execute_action(this, itRPC->second);
     }
 }
-void MsContract::OnTransfer(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo)
+void msContract::onTransfer(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo)
 {
     MsAssert(_from != _to, "must from != to");
 
     if (_to == this->m_self)
     {
-        return this->OnTransferToMe(_from, _to, _assetQuantity, _memo);
+        return this->onTransferToMe(_from, _to, _assetQuantity, _memo);
     }
     else if (_from == this->m_self)
     {
-        return this->OnTransferFromMe(_from, _to, _assetQuantity, _memo);
+        return this->onTransferFromMe(_from, _to, _assetQuantity, _memo);
     }
     else
     {
-        return this->OnTransferOther(_from, _to, _assetQuantity, _memo);
+        return this->onTransferOther(_from, _to, _assetQuantity, _memo);
     }
 }

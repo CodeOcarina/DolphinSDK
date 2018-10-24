@@ -1,6 +1,6 @@
 #pragma once
 
-class MsAsset : public eosio::extended_asset
+class msAsset : public eosio::extended_asset
 {
 private:
     std::string
@@ -10,9 +10,9 @@ private:
         _AmountS2N(std::string strAmount, uint8_t &precision);
 
 public:
-    MsAsset(std::string theTokenAccountName, uint8_t thePrecision, std::string theTokenSymbol);
-    MsAsset(AccountName theTokenAccountName, eosio::symbol_type theTokenSymbol, uint64_t amount = 0);
-    MsAsset(AccountName theTokenAccountName, eosio::asset quantity);
+    msAsset(std::string theTokenAccountName, uint8_t thePrecision, std::string theTokenSymbol);
+    msAsset(AccountName theTokenAccountName, eosio::symbol_type theTokenSymbol, uint64_t amount = 0);
+    msAsset(AccountName theTokenAccountName, eosio::asset quantity);
 
     bool
         isSystemEOSToken();

@@ -1,47 +1,47 @@
 
-MsAccount::MsAccount(std::string _account_name)
+msAccount::msAccount(std::string _account_name)
     : m_account(S2N(_account_name.c_str()))
 {
 }
 
-MsAccount::MsAccount(AccountName _account)
+msAccount::msAccount(AccountName _account)
     : m_account(_account)
 {
 }
 
-void MsAccount::CheckPermission()
+void msAccount::CheckPermission()
 {
     eosio::require_auth(m_account);
 }
 
-void MsAccount::CheckPermission(MarkName PermissionName)
+void msAccount::CheckPermission(MarkName PermissionName)
 {
     eosio::require_auth(eosio::permission_level(m_account, PermissionName));
 }
 
 AccountName
-MsAccount::GetEosName()
+msAccount::GetEosName()
 {
     return m_account;
 }
 
 std::string
-MsAccount::ToString() { return N2S(m_account); }
+msAccount::ToString() { return N2S(m_account); }
 
-MsAsset
-MsAccount::GetBalance(MsAccount token_contract, uint64_t precision, const char *symbol)
+msAsset
+msAccount::GetBalance(msAccount token_contract, uint64_t precision, const char *symbol)
 {
     return GetBalance(token_contract, eosio::string_to_symbol(precision, symbol));
 }
 
-void MsAccount::Transfer(MsAccount target_account, MsAsset asset_amount, std::string memo)
+void msAccount::Transfer(msAccount target_account, msAsset asset_amount, std::string memo)
 {
     // MsLogName(Transfer, this->ToString().c_str(), " ==> ", target_account.ToString().c_str(), asset_amount, "  [pending]");
     eosio::currency::inline_transfer(this->m_account, target_account.m_account, asset_amount, memo);
     // MsLogName(Transfer, this->ToString().c_str(), " ==> ", target_account.ToString().c_str(), asset_amount, "  [completed]");
 }
 
-// void MsAccount::Transfer(MsAccount target_account, Ms::Asset asset_amount, std::string memo)
+// void msAccount::Transfer(msAccount target_account, Ms::Asset asset_amount, std::string memo)
 // {
 //     asset_amount.
 //     MsLogName(Transfer, this->ToString().c_str(), " ==> ", target_account.ToString().c_str(), asset_amount, "  [pending]");
@@ -49,8 +49,8 @@ void MsAccount::Transfer(MsAccount target_account, MsAsset asset_amount, std::st
 //     MsLogName(Transfer, this->ToString().c_str(), " ==> ", target_account.ToString().c_str(), asset_amount, "  [completed]");
 // }
 
-MsAsset
-MsAccount::GetBalance(MsAccount token_contract, eosio::symbol_type sym)
+msAsset
+msAccount::GetBalance(msAccount token_contract, eosio::symbol_type sym)
 {
     eosio::extended_asset _extended_asset;
     _extended_asset.symbol = sym;
@@ -67,10 +67,10 @@ MsAccount::GetBalance(MsAccount token_contract, eosio::symbol_type sym)
     {
         _extended_asset.amount = _token->balance.amount;
     }
-    return MsAsset(_extended_asset.contract, eosio::asset(_extended_asset.amount, _extended_asset.symbol));
+    return msAsset(_extended_asset.contract, eosio::asset(_extended_asset.amount, _extended_asset.symbol));
 }
 
-bool MsAccount::CheckBalance(MsAsset theAsset)
+bool msAccount::CheckBalance(msAsset theAsset)
 {
     return GetBalance(theAsset.contract, theAsset.symbol).amount >= theAsset.amount;
 }

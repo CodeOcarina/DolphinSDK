@@ -21,20 +21,20 @@ void gettime()
     eosio::print(" publication time: ", t_pub_time);
 }
 
-void eosdice::OnTransferToMe(MsAccount _from, MsAccount /*_to equal m_self*/, MsAsset _assetQuantity, std::string _memo)
+void eosdice::onTransferToMe(msAccount _from, msAccount /*_to equal m_self*/, msAsset _assetQuantity, std::string _memo)
 {
     if (_memo == "")
     {
-        this->CommitAndExit();
+        this->commitAndExit();
     }
 
     MsLog("time:", current_time());
 
     // MsLog(_memo.c_str());
-    Json::JSON jsonObj = this->LoadParam(_memo);
+    json::JSON jsonObj = this->loadParam(_memo);
     MsLog("time:", current_time());
     // int tarNumber = atoi(_memo.c_str());
-    int tarNumber = Json::CheckInt(jsonObj["roll"], 2, 96);
+    int tarNumber = json::getInt(jsonObj["roll"], 2, 96);
     MsLog("time:", current_time());
 
     // auto number = Ms::Random(1, 100);
@@ -42,7 +42,7 @@ void eosdice::OnTransferToMe(MsAccount _from, MsAccount /*_to equal m_self*/, Ms
     if (tarNumber >= number)
     {
         MsLog(_from.ToString().c_str(), " rolled ", tarNumber, ", less than ", number, ", you loss!");
-        this->CommitAndExit();
+        this->commitAndExit();
     }
     MsLog("time:", current_time());
 
@@ -50,7 +50,7 @@ void eosdice::OnTransferToMe(MsAccount _from, MsAccount /*_to equal m_self*/, Ms
     auto ODDS = 98.0 / ((float)(tarNumber)-1.0);
     uint64_t payAmount = (uint64_t)((ODDS * _assetQuantity.amount) - _assetQuantity.amount);
 
-    MsAsset payAsset(N(eosio.token), S(4, EOS), payAmount);
+    msAsset payAsset(N(eosio.token), S(4, EOS), payAmount);
     VALIDATE_ASSET(payAsset, 0.0001, 10000.0000, eosio.token, 4, EOS);
     MsLog("time:", current_time());
 
@@ -63,12 +63,12 @@ void eosdice::OnTransferToMe(MsAccount _from, MsAccount /*_to equal m_self*/, Ms
     MsLog("time:", current_time());
 }
 
-void eosdice::OnTransferFromMe(MsAccount /*_from equal m_self*/, MsAccount _to, MsAsset _assetQuantity, std::string _memo)
+void eosdice::onTransferFromMe(msAccount /*_from equal m_self*/, msAccount _to, msAsset _assetQuantity, std::string _memo)
 {
     MsLog("合约:", m_self.ToString().c_str(), "转出:", _assetQuantity.ToString().c_str());
 }
 
-void eosdice::OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo)
+void eosdice::onTransferOther(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo)
 {
     MsLog("记录:", _from.ToString().c_str(), "转给:", _to.ToString().c_str(), ":", _assetQuantity.ToString().c_str());
 }
@@ -76,14 +76,14 @@ void eosdice::OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuan
 // BEGIN_IMPL(transfer)
 // {
 //     MAKE_PARAM(param, (AccountName from)(AccountName to)(eosio::asset quantity)(std::string memo));
-//     MsAccount theFrom(param.from);
-//     MsAccount theTo(param.to);
+//     msAccount theFrom(param.from);
+//     msAccount theTo(param.to);
 
 //     MsAssert(param.from != param.to, "from != to");
 
 //     if (param.from == m_receiver || param.to != m_receiver)
 //     {
-//         this->CommitAndExit();
+//         this->commitAndExit();
 //     }
 
 //     // Ms::Asset theAsset(N(eosio.token), param.quantity);
@@ -100,9 +100,9 @@ void eosdice::OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuan
 //     // }
 
 //     MsLog(param.memo);
-//     Json::JSON jsonObj = this->LoadParam(param.memo);
+//     json::JSON jsonObj = this->loadParam(param.memo);
 //     MsLog("22222");
-//     int tarNumber = Json::CheckInt(jsonObj["roll"], 2, 96);
+//     int tarNumber = json::checkInt(jsonObj["roll"], 2, 96);
 //     MsLog("33333");
 
 //     // auto number = Ms::Random(1, 100);
@@ -110,7 +110,7 @@ void eosdice::OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuan
 //     if (tarNumber >= number)
 //     {
 //         MsLog(theFrom.ToString().c_str(), " rolled ", tarNumber, ", less than ", number, ", you loss!");
-//         this->CommitAndExit();
+//         this->commitAndExit();
 //     }
 
 //     // 计算赔率的公式在这里

@@ -12,34 +12,34 @@ struct rpcresult
 typedef eosio::multi_index<N(rpcparamresult), rpcresult> result;
 #pragma endregion
 
-#include "Json.hpp"
+#include "json.hpp"
 
-class MsContract : public eosio::contract
+class msContract : public eosio::contract
 {
 protected:
-    MsAccount m_self;
-    MsAccount m_receiver;
-    MsAccount m_code;
-    MsAccount m_action;
+    msAccount m_self;
+    msAccount m_receiver;
+    msAccount m_code;
+    msAccount m_action;
 
 public:
-    static MsContract *CreateNewContractInstance(uint64_t _self, uint64_t _code, uint64_t _action);
-    MsContract(uint64_t _self, uint64_t _code, uint64_t _action);
+    static msContract *createNewContractInstance(uint64_t _self, uint64_t _code, uint64_t _action);
+    msContract(uint64_t _self, uint64_t _code, uint64_t _action);
 
-    typedef void (MsContract::*RPC_CALL)(void);
+    typedef void (msContract::*RPC_CALL)(void);
     std::map<uint64_t, RPC_CALL> m_listRPC;
 
-    MsAccount GetCurrentReceiver();
-    MsAccount GetCurrentCode();
+    msAccount getCurrentReceiver();
+    msAccount getCurrentCode();
 
-    void CommitAndExit(uint64_t ret_code = 1);
+    void commitAndExit(uint64_t ret_code = 1);
 
-    Json::JSON LoadParam(std::string &&_json_param) { return this->LoadParam(_json_param); }
-    Json::JSON LoadParam(std::string &_json_param);
+    json::JSON loadParam(std::string &&_json_param) { return this->loadParam(_json_param); }
+    json::JSON loadParam(std::string &_json_param);
 
-    void OnCall();
-    void OnTransfer(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo);
-    virtual void OnTransferToMe(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual OnTransferToMe()"); }
-    virtual void OnTransferFromMe(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual OnTransferFromMe()"); }
-    virtual void OnTransferOther(MsAccount _from, MsAccount _to, MsAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual OnTransferOther()"); }
+    void onCall();
+    void onTransfer(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo);
+    virtual void onTransferToMe(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual onTransferToMe()"); }
+    virtual void onTransferFromMe(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual onTransferFromMe()"); }
+    virtual void onTransferOther(msAccount _from, msAccount _to, msAsset _assetQuantity, std::string _memo) { MsAssert(false, "默认禁止转账,请重载并实现virtual onTransferOther()"); }
 };

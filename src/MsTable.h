@@ -1,17 +1,17 @@
 #pragma once
 
 template <uint64_t TableName, class T>
-class MsTable
+class msTable
 {
 private:
-    MsAccount m_contract;
-    MsAccount m_owner;
+    msAccount m_contract;
+    msAccount m_owner;
 
     typedef eosio::multi_index<TableName, T> TABLE;
     TABLE *m_Table;
 
 public:
-    MsTable(MsAccount _contract, MsAccount _owner)
+    msTable(msAccount _contract, msAccount _owner)
         : m_contract(_contract), m_owner(_owner)
     {
         m_Table = new TABLE(m_contract.GetEosName(), m_owner.GetEosName());

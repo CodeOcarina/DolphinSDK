@@ -12,7 +12,7 @@
 #include <ostream>
 #include <iostream>
 
-namespace Json
+namespace json
 {
 
     using std::deque;
@@ -882,11 +882,11 @@ namespace Json
         return std::move(parse_next(str, offset));
     }
 
-    int CheckInt(JSON &jsonObj, int min = INT_MIN, int = INT_MAX)
+    int getInt(JSON &jsonObj, int min = INT_MIN, int = INT_MAX)
     {
         bool b = false;
         int ret = jsonObj.ToInt(b);
-        MsAssert(b && ret >= INT_MIN && ret <= INT_MAX, "CheckInt failed");
+        MsAssert(b && ret >= INT_MIN && ret <= INT_MAX, "checkInt failed");
         return ret;
     }
-} // namespace Json
+} // namespace json
